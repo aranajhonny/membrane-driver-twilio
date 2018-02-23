@@ -45,19 +45,20 @@ export const MessagesCollection = {
   },
   async page({ args }) {
     // The default is 50, and the maximum is 1000.
-    const pageSize = args.pageSize || 50;
+    // const pageSize = args.pageSize || 50;
 
-    let url = args.nextPageUri
-      ? resolve(baseUrl, args.nextPageUri)
-      : `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json?PageSize=${pageSize}`;
+    const { pageToken, page, pageSize } = args;
 
-    const result = await got.get(url, {
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json'
-      },
-      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`
-    });
+    const result = await got.get(
+      `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json?PageSize=${pageSize}&Page=${page}&PageToken=${pageToken}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json'
+        },
+        auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`
+      }
+    );
     const json = JSON.parse(result.body);
     return json;
   }
@@ -68,7 +69,12 @@ export let MessagePage = {
     if (source.next_page_uri === undefined) {
       return null;
     }
-    return root.messages.page({ nextPageUri: source.next_page_uri });
+    const { PageToken, Page, PageSize } = parse(source.next_page_uri);
+    return root.messages.page({
+      pageSize: PageSize,
+      pageToken: PageToken,
+      page: Page
+    });
   },
   items({ source }) {
     return source.messages;
