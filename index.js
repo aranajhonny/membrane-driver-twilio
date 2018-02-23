@@ -59,7 +59,6 @@ export const MessagesCollection = {
       auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`
     });
     const json = JSON.parse(result.body);
-    console.log(json.next_page_uri);
     return json;
   }
 };
