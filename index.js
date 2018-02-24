@@ -1,6 +1,6 @@
 import got from 'got';
-import { parse } from 'querystring';
-import { resolve } from 'url';
+import { parse as parseQuery } from 'querystring';
+import { parse as parseUrl } from 'url';
 
 const { ACCOUNT_SID, AUTH_TOKEN } = process.env;
 const { root } = program.refs;
@@ -45,10 +45,10 @@ export const MessagesCollection = {
   },
   async page({ args }) {
     // The default is 50, and the maximum is 1000.
-    // const pageSize = args.pageSize || 50;
+    const pageSize = args.pageSize || 50;
 
-    const { pageToken, page, pageSize } = args;
-
+    const { pageToken, page } = args;
+    console.log(args);
     const result = await got.get(
       `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json?PageSize=${pageSize}&Page=${page}&PageToken=${pageToken}`,
       {
@@ -60,6 +60,7 @@ export const MessagesCollection = {
       }
     );
     const json = JSON.parse(result.body);
+    console.log(json);
     return json;
   }
 };
@@ -69,7 +70,9 @@ export let MessagePage = {
     if (source.next_page_uri === undefined) {
       return null;
     }
-    const { PageToken, Page, PageSize } = parse(source.next_page_uri);
+    const { PageToken, Page, PageSize } = parseQuery(
+      parseUrl(source.next_page_uri).query
+    );
     return root.messages.page({
       pageSize: PageSize,
       pageToken: PageToken,
