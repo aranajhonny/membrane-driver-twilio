@@ -48,7 +48,6 @@ export const MessagesCollection = {
     const pageSize = args.pageSize || 50;
 
     const { pageToken, page } = args;
-    console.log(args);
     const result = await got.get(
       `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json?PageSize=${pageSize}&Page=${page}&PageToken=${pageToken}`,
       {
@@ -60,7 +59,6 @@ export const MessagesCollection = {
       }
     );
     const json = JSON.parse(result.body);
-    console.log(json);
     return json;
   }
 };
