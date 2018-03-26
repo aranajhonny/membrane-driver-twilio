@@ -1,0 +1,187 @@
+{
+ "imports": [],
+ "dependencies": [],
+ "environment": [
+  {
+   "name": "ACCOUNT_SID",
+   "description": "The Account SID"
+  },
+  {
+   "name": "AUTH_TOKEN",
+   "description": "The Auth Token"
+  }
+ ],
+ "endpoints": [],
+ "schema": {
+  "types": [
+   {
+    "name": "Root",
+    "fields": [
+     {
+      "name": "messages",
+      "type": "MessagesCollection"
+     }
+    ],
+    "computedFields": [],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "MessagesCollection",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "one",
+      "type": "Message",
+      "params": [
+       {
+        "name": "sid",
+        "type": "String"
+       }
+      ]
+     },
+     {
+      "name": "page",
+      "type": "MessagePage",
+      "params": [
+       {
+        "name": "pageSize",
+        "type": "String"
+       },
+       {
+        "name": "page",
+        "type": "String"
+       },
+       {
+        "name": "pageToken",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "actions": [
+     {
+      "name": "sendSms",
+      "type": "Int",
+      "params": [
+       {
+        "name": "from",
+        "type": "String"
+       },
+       {
+        "name": "to",
+        "type": "String"
+       },
+       {
+        "name": "body",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "events": []
+   },
+   {
+    "name": "MessagePage",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "items",
+      "type": "List",
+      "ofType": {
+       "type": "Message"
+      }
+     },
+     {
+      "name": "next",
+      "type": "Ref",
+      "ofType": {
+       "type": "MessagePage"
+      }
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "Message",
+    "fields": [
+     {
+      "name": "direction",
+      "type": "String"
+     },
+     {
+      "name": "body",
+      "type": "String"
+     },
+     {
+      "name": "from",
+      "type": "String"
+     },
+     {
+      "name": "price",
+      "type": "String"
+     },
+     {
+      "name": "sid",
+      "type": "String"
+     },
+     {
+      "name": "uri",
+      "type": "String"
+     }
+    ],
+    "computedFields": [
+     {
+      "name": "self",
+      "type": "Ref",
+      "ofType": {
+       "type": "Message"
+      }
+     },
+     {
+      "name": "accountSid",
+      "type": "String"
+     },
+     {
+      "name": "apiVersion",
+      "type": "String"
+     },
+     {
+      "name": "numSegments",
+      "type": "Int"
+     },
+     {
+      "name": "numMedia",
+      "type": "Int"
+     },
+     {
+      "name": "dateCreated",
+      "type": "String"
+     },
+     {
+      "name": "dateSent",
+      "type": "String"
+     },
+     {
+      "name": "dateUpdated",
+      "type": "String"
+     },
+     {
+      "name": "errorCode",
+      "type": "String"
+     },
+     {
+      "name": "errorMessage",
+      "type": "String"
+     }
+    ],
+    "actions": [],
+    "events": []
+   }
+  ]
+ },
+ "expressions": [],
+ "database": [],
+ "isDriver": false
+}
