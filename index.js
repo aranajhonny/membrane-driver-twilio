@@ -28,7 +28,7 @@ export const MessageCollection = {
     const json = JSON.parse(result.body)
     return json
   },
-  async sendSms({ self, args }) {
+  async sendSms({ args }) {
     result = await got.post(
       `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json`,
       {
