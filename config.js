@@ -5,9 +5,9 @@ environment
   .add('AUTH_TOKEN', 'The Auth Token')
 
 schema.type('Root')
-  .field('messages', 'MessagesCollection')
+  .field('messages', 'MessageCollection')
 
-schema.type('MessagesCollection')
+schema.type('MessageCollection')
   .computed('one', 'Message')
     .param('sid', 'String')
   .computed('page', 'MessagePage')

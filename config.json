@@ -19,7 +19,7 @@
     "fields": [
      {
       "name": "messages",
-      "type": "MessagesCollection"
+      "type": "MessageCollection"
      }
     ],
     "computedFields": [],
@@ -27,7 +27,7 @@
     "events": []
    },
    {
-    "name": "MessagesCollection",
+    "name": "MessageCollection",
     "fields": [],
     "computedFields": [
      {
