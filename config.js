@@ -1,8 +1,12 @@
-const { schema, imports, dependencies, environment, expressions, endpoints } = program;
+const { schema, imports, dependencies, environment, expressions, endpoints, tests } = program;
 
 environment
   .add('ACCOUNT_SID', 'The Account SID')
   .add('AUTH_TOKEN', 'The Auth Token')
+
+tests
+  .add('access', 'The driver can access the Twilio API and retrieve data')
+  .add('webhooks', 'The driver can receive webhooks from Twilio')
 
 schema.type('Root')
   .field('messages', 'MessageCollection')

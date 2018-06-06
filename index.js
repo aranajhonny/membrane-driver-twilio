@@ -12,6 +12,36 @@ export async function init() {
   })
 }
 
+export async function test({ name }) {
+  switch (name) {
+    case 'access': {
+      if (!ACCOUNT_SID || AUTH_TOKEN) {
+        return false;
+      }
+      
+      try {
+        const res = await got.get(`${baseUrl}/Accounts/${ACCOUTN_SID}/Messages.json`,{
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+          },
+          auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
+          }
+        )
+        return res && res.status === 200;
+      } catch (e) {
+        return false;
+      }
+      break;
+    }
+    case 'webhooks': {
+      // TODO
+      return false;
+    }
+  }
+  return false;
+}
+
 export const MessageCollection = {
   async one({ args }) {
     const { sid } = args
