@@ -15,12 +15,12 @@ export async function init() {
 export async function test({ name }) {
   switch (name) {
     case 'access': {
-      if (!ACCOUNT_SID || AUTH_TOKEN) {
+      if (!ACCOUNT_SID || !AUTH_TOKEN) {
         return false;
       }
       
       try {
-        const res = await got.get(`${baseUrl}/Accounts/${ACCOUTN_SID}/Messages.json`,{
+        const res = await got.get(`${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json`,{
           headers: {
             accept: 'application/json',
             'content-type': 'application/json',
@@ -28,7 +28,7 @@ export async function test({ name }) {
           auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
           }
         )
-        return res && res.status === 200;
+        return res && res.statusCode === 200;
       } catch (e) {
         return false;
       }
