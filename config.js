@@ -4,6 +4,9 @@ environment
   .add('ACCOUNT_SID', 'The Account SID')
   .add('AUTH_TOKEN', 'The Auth Token')
 
+endpoints
+  .https('webhooks', 'Webhooks received from Twilio');
+
 tests
   .add('access', 'The driver can access the Twilio API and retrieve data')
   .add('webhooks', 'The driver can receive webhooks from Twilio')

@@ -42,6 +42,16 @@ export async function test({ name }) {
   return false;
 }
 
+export function endpoint({ name, req }) {
+  switch (name) {
+    case 'webhook': {
+      console.log(req.body);
+      console.log(req.query);
+      break;
+    }
+  }
+}
+
 export const MessageCollection = {
   async one({ args }) {
     const { sid } = args

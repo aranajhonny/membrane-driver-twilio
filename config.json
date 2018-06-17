@@ -10,7 +10,14 @@
    "description": "The Auth Token"
   }
  ],
- "endpoints": [],
+ "endpoints": [
+  {
+   "name": "webhooks",
+   "type": "https",
+   "description": "Webhooks received from Twilio",
+   "options": {}
+  }
+ ],
  "schema": {
   "imports": [],
   "types": [
