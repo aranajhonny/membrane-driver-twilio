@@ -45,8 +45,7 @@ export async function test({ name }) {
 export function endpoint({ name, req }) {
   switch (name) {
     case 'webhooks': {
-      console.log(req.body);
-      console.log(req.query);
+      console.log(req);
       break;
     }
   }
