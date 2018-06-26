@@ -86,7 +86,26 @@
             ]
           }
         ],
-        "events": []
+        "events": [
+          {
+            "name": "smsReceived",
+            "params": [
+              {
+                "name": "from",
+                "type": "String"
+              },
+              {
+                "name": "to",
+                "type": "String"
+              },
+              {
+                "name": "body",
+                "type": "String"
+              }
+            ],
+            "type": "Void"
+          }
+        ]
       },
       {
         "name": "MessagePage",
@@ -201,6 +220,6 @@
     }
   ],
   "isDriver": false,
-  "id": "9569822a-8d82-42e8-9c4c-d0419953c4cf",
+  "id": "463ebaec-7b6f-4c02-8fdc-deaa91d19ff5",
   "files": []
 }

@@ -45,7 +45,12 @@ export async function test({ name }) {
 export function endpoint({ name, req }) {
   switch (name) {
     case 'webhooks': {
-      console.log(req.body.Body);
+      const sms = {
+        from: req.body.From,
+        to: req.body.To,
+        body: req.body.Body,
+      }
+      console.log('Received:', sms);
       break;
     }
   }
