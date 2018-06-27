@@ -10,8 +10,8 @@ const baseUrlv1 = `https://messaging.twilio.com/v1/Accounts/${ACCOUNT_SID}`
 const headers = { accept: 'application/json', 'content-type': 'application/json' }
 const auth = `${ACCOUNT_SID}:${AUTH_TOKEN}`;
 
-async function api(method, path, options) {
-  const result = await got[method](`${baseUrl}${path}`, { auth, ...options });
+async function api(method, url, options) {
+  const result = await got[method](url, { auth, ...options });
   return JSON.parse(result.body)
 }
 

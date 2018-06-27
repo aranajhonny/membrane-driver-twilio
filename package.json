@@ -1,6 +1,6 @@
 {
   "name": "twilio",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "dependencies": {
     "got": "^8.2.0"
   },
