@@ -58,8 +58,8 @@ export function endpoint({ name, req }) {
 }
 
 async function api(method, path, options) {
-  return await got[method](
-    `${baseUrl}/${path}`,
+  const result = await got[method](
+    `${baseUrl}${path}`,
     {
       headers: {
         accept: 'application/json',
