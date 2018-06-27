@@ -80,7 +80,7 @@ export const MessageCollection = {
     return apiGet('get', `/Accounts/${ACCOUNT_SID}/Messages/${args.sid}.json`);
   },
   async sendSms({ args }) {
-    return apiPost(`/Accounts/${ACCOUNT_SID}/Messages/${args.sid}.json`, {
+    return apiPost(`/Accounts/${ACCOUNT_SID}/Messages.jsonn`, {
       From: args.from,
       To: args.to,
       Body: args.body,
