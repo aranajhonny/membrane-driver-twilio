@@ -15,9 +15,9 @@ async function api(method, path, options) {
   return JSON.parse(result.body)
 }
 
-const apiGet = (path) => api('get', baseUrl + path, path, { headers });
+const apiGet = (path) => api('get', baseUrl + path, { headers });
 const apiPost = (path, body) => api('post', baseUrl + path, { body, form: true });
-const apiGetv1 = (path) => api('get', baseUrlv1 + path, path, { headers });
+const apiGetv1 = (path) => api('get', baseUrlv1 + path, { headers });
 const apiPostv1 = (path, body) => api('post', baseUrlv1 + path, { body, form: true });
 
 export async function init() {
