@@ -138,7 +138,7 @@ export const Message = {
 
 export const MessagingServiceCollection = {
   async one({ args }) {
-    return apiGet(`/Messages/${args.sid}.json`);
+    
   },
   async sendSms({ args }) {
     return apiPost(`/Messages.json`, {
@@ -147,13 +147,9 @@ export const MessagingServiceCollection = {
       Body: args.body,
     });
   },
-  async page({ args }) {
-    const pageSize = args.pageSize || 50
-    const query = stringifyQuery({
-      PageSize: args.pageSize || 50, // max is 1000
-      Page: args.page,
-      PageToken: args.pageToken,
-    })
-    return apiGet(`/Messages.json?${query}`);
+  async items({ args }) {
+    const result = apiGetv1(`/Services`);
+    console.log(result);
+    return result;
   },
 }
