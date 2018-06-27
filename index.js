@@ -153,5 +153,8 @@ export const MessagingServiceCollection = {
   },
 }
 export const MessagingService = {
+  self({ source }) {
+    return root.messagingServices.one({ sid: source.sid });
+  },
   friendlyName({ source }) { return source.friendly_name; }
 }
