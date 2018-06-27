@@ -58,6 +58,17 @@ export function endpoint({ name, req }) {
 }
 
 async function api(method, path, options) {
+  console.log(
+    `${baseUrl}${path}`,
+    {
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
+      ...options,
+    }
+  );
   const result = await got[method](
     `${baseUrl}${path}`,
     {
