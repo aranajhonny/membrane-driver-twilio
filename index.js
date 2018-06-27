@@ -139,6 +139,7 @@ export const Message = {
 export const MessagingServiceCollection = {
   async one({ args }) {
     const result = await apiGetv1(`/Services/${args.sid}`);
+    return result;
   },
   async sendSms({ args }) {
     return apiPost(`/Messages.json`, {
