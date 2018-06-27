@@ -61,10 +61,6 @@ async function api(method, path, options) {
   console.log(
     `${baseUrl}${path}`,
     {
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
       auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
       ...options,
     }
@@ -83,7 +79,12 @@ async function api(method, path, options) {
   return JSON.parse(result.body)
 }
 
-const apiGet = (path) => api('get', path, {});
+const apiGet = (path) => api('get', path, {
+  headers: {
+    accept: 'application/json',
+    'content-type': 'application/json',
+  },
+});
 const apiPost = (path, body) => api('post', path, { body, form: true });
 
 export const MessageCollection = {
