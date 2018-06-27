@@ -6,32 +6,19 @@ const { ACCOUNT_SID, AUTH_TOKEN } = process.env
 const { root } = program.refs
 
 const baseUrl = `https://api.twilio.com/2010-04-01/Accounts/${ACCOUNT_SID}`
+const baseUrlv1 = `https://messaging.twilio.com/v1/Accounts/${ACCOUNT_SID}`
+const headers = { accept: 'application/json', 'content-type': 'application/json' }
+const auth = `${ACCOUNT_SID}:${AUTH_TOKEN}`;
 
 async function api(method, path, options) {
-  console.log(
-    `${baseUrl}${path}`,
-    {
-      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      ...options,
-    }
-  );
-  const result = await got[method](
-    `${baseUrl}${path}`,
-    {
-      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      ...options,
-    }
-  )
+  const result = await got[method](`${baseUrl}${path}`, { auth, ...options });
   return JSON.parse(result.body)
 }
 
-const apiGet = (path) => api('get', path, {
-  headers: {
-    accept: 'application/json',
-    'content-type': 'application/json',
-  },
-});
-const apiPost = (path, body) => api('post', path, { body, form: true });
+const apiGet = (path) => api('get', baseUrl + path, path, { headers });
+const apiPost = (path, body) => api('post', baseUrl + path, { body, form: true });
+const apiGetv1 = (path) => api('get', baseUrlv1 + path, path, { headers });
+const apiPostv1 = (path, body) => api('post', baseUrlv1 + path, { body, form: true });
 
 export async function init() {
   await root.set({
@@ -39,23 +26,14 @@ export async function init() {
     messagingServices: {},
   })
 }
+export async function update() { return init(); }
 
 export async function test({ name }) {
   switch (name) {
     case 'access': {
-      if (!ACCOUNT_SID || !AUTH_TOKEN) {
-        return false;
-      }
-      
       try {
-        const res = await got.get(`${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json`,{
-          headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-          },
-          auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-          }
-        )
+        const testUrl = `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json`;
+        const res = await got.get(testUrl, { headers, auth })
         return res && res.statusCode === 200;
       } catch (e) {
         return false;
@@ -155,5 +133,27 @@ export const Message = {
   },
   errorMessage({ source }) {
     return source['error_message']
+  },
+}
+
+export const MessagingServiceCollection = {
+  async one({ args }) {
+    return apiGet(`/Messages/${args.sid}.json`);
+  },
+  async sendSms({ args }) {
+    return apiPost(`/Messages.json`, {
+      From: args.from,
+      To: args.to,
+      Body: args.body,
+    });
+  },
+  async page({ args }) {
+    const pageSize = args.pageSize || 50
+    const query = stringifyQuery({
+      PageSize: args.pageSize || 50, // max is 1000
+      Page: args.page,
+      PageToken: args.pageToken,
+    })
+    return apiGet(`/Messages.json?${query}`);
   },
 }
