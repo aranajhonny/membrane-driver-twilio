@@ -141,9 +141,10 @@ export const MessagingServiceCollection = {
     const result = await apiGetv1(`/Services/${args.sid}`);
     return result;
   },
-  async sendSms({ args }) {
+  async sendSms({ self, args }) {
+    const { sid } = self.match(root.messagingService.one);
     return apiPost(`/Messages.json`, {
-      From: args.from,
+      MessagingServiceSid: sid,
       To: args.to,
       Body: args.body,
     });
