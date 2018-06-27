@@ -222,6 +222,14 @@
             "name": "friendlyName",
             "params": [],
             "type": "String"
+          },
+          {
+            "name": "self",
+            "params": [],
+            "type": "Ref",
+            "ofType": {
+              "type": "MessagingService"
+            }
           }
         ],
         "actions": [
@@ -280,6 +288,6 @@
     }
   ],
   "isDriver": false,
-  "id": "a435e8c0-d828-4a6b-972d-2e89bb055ae5",
+  "id": "06687a72-98cc-43f4-a09d-0ababf3c5c00",
   "files": []
 }
