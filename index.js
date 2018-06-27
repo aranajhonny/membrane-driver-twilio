@@ -148,7 +148,7 @@ export const MessagingServiceCollection = {
     });
   },
   async items({ args }) {
-    const result = apiGetv1(`/Services`);
+    const result = await apiGetv1(`/Services`);
     console.log(result);
     return result;
   },
