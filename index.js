@@ -5,7 +5,34 @@ import { parse as parseUrl } from 'url'
 const { ACCOUNT_SID, AUTH_TOKEN } = process.env
 const { root } = program.refs
 
-const baseUrl = 'https://api.twilio.com/2010-04-01'
+const baseUrl = `https://api.twilio.com/2010-04-01/Accounts/${ACCOUNT_SID}`
+
+async function api(method, path, options) {
+  console.log(
+    `${baseUrl}${path}`,
+    {
+      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
+      ...options,
+    }
+  );
+  const result = await got[method](
+    `${baseUrl}${path}`,
+    {
+      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
+      ...options,
+    }
+  )
+  return JSON.parse(result.body)
+}
+
+const apiGet = (path) => api('get', path, {
+  headers: {
+    accept: 'application/json',
+    'content-type': 'application/json',
+  },
+});
+const apiPost = (path, body) => api('post', path, { body, form: true });
+
 export async function init() {
   await root.set({
     messages: {},
@@ -57,38 +84,12 @@ export function endpoint({ name, req }) {
   }
 }
 
-async function api(method, path, options) {
-  console.log(
-    `${baseUrl}${path}`,
-    {
-      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      ...options,
-    }
-  );
-  const result = await got[method](
-    `${baseUrl}${path}`,
-    {
-      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      ...options,
-    }
-  )
-  return JSON.parse(result.body)
-}
-
-const apiGet = (path) => api('get', path, {
-  headers: {
-    accept: 'application/json',
-    'content-type': 'application/json',
-  },
-});
-const apiPost = (path, body) => api('post', path, { body, form: true });
-
 export const MessageCollection = {
   async one({ args }) {
-    return apiGet('get', `/Accounts/${ACCOUNT_SID}/Messages/${args.sid}.json`);
+    return apiGet(`/Messages/${args.sid}.json`);
   },
   async sendSms({ args }) {
-    return apiPost(`/Accounts/${ACCOUNT_SID}/Messages.json`, {
+    return apiPost(`/Messages.json`, {
       From: args.from,
       To: args.to,
       Body: args.body,
@@ -101,7 +102,7 @@ export const MessageCollection = {
       Page: args.page,
       PageToken: args.pageToken,
     })
-    return apiGet(`/Accounts/${ACCOUNT_SID}/Messages.json?${query}`);
+    return apiGet(`/Messages.json?${query}`);
   },
 }
 
