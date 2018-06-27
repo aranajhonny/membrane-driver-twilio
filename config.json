@@ -235,7 +235,16 @@
         "actions": [
           {
             "name": "sendSms",
-            "params": [],
+            "params": [
+              {
+                "name": "body",
+                "type": "String"
+              },
+              {
+                "name": "to",
+                "type": "String"
+              }
+            ],
             "type": "Void"
           }
         ],
@@ -288,6 +297,6 @@
     }
   ],
   "isDriver": false,
-  "id": "5f9e75e5-8e34-4082-8968-650c214fe5db",
+  "id": "6faf9d77-072c-4ffa-bbe5-1948b9cb4499",
   "files": []
 }
