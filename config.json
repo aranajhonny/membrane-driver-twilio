@@ -211,8 +211,19 @@
       },
       {
         "name": "MessagingService",
-        "fields": [],
-        "computedFields": [],
+        "fields": [
+          {
+            "name": "sid",
+            "type": "String"
+          }
+        ],
+        "computedFields": [
+          {
+            "name": "friendlyName",
+            "params": [],
+            "type": "String"
+          }
+        ],
         "actions": [
           {
             "name": "sendSms",
@@ -269,6 +280,6 @@
     }
   ],
   "isDriver": false,
-  "id": "808a3ab9-0a53-4ebf-9d28-7289a1ace4ef",
+  "id": "a0832063-c427-476e-b227-5bda687a2b4c",
   "files": []
 }
