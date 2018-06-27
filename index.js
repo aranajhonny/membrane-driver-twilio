@@ -153,6 +153,6 @@ export const MessagingServiceCollection = {
     return result;
   },
 }
-export const MessagingServiceCollection = {
+export const MessagingService = {
   friendlyName({ source }) { return source.friendly_name; }
 }
