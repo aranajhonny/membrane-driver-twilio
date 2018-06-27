@@ -1,5 +1,5 @@
 import got from 'got'
-import { parse as parseQuery } from 'querystring'
+import { parse as parseQuery, stringify as stringifyQuery } from 'querystring'
 import { parse as parseUrl } from 'url'
 
 const { ACCOUNT_SID, AUTH_TOKEN } = process.env
@@ -9,6 +9,7 @@ const baseUrl = 'https://api.twilio.com/2010-04-01'
 export async function init() {
   await root.set({
     messages: {},
+    messagingServices: {},
   })
 }
 
@@ -50,60 +51,49 @@ export function endpoint({ name, req }) {
         to: req.body.To,
         body: req.body.Body,
       }
-      console.log('Received:', sms);
+      console.log('Received:',req.body);
       break;
     }
   }
 }
 
+function api(method, path, options) {
+  return await got[method](
+    `${baseUrl}/${path}`,
+    {
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
+      ...options,
+    }
+  )
+  return JSON.parse(result.body)
+}
+
+const apiGet = (path) => api('get', path, {});
+const apiPost = (path, body) => api('post', path, { body, form: true });
+
 export const MessageCollection = {
   async one({ args }) {
-    const { sid } = args
-    const result = await got.get(
-      `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages/${sid}.json`,
-      {
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
-        },
-        auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      }
-    )
-    const json = JSON.parse(result.body)
-    return json
+    return apiGet('get', `/Accounts/${ACCOUNT_SID}/Messages/${args.sid}.json`);
   },
   async sendSms({ args }) {
-    result = await got.post(
-      `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json`,
-      {
-        body: {
-          From: args.from,
-          To: args.to,
-          Body: args.body,
-        },
-        form: true,
-        auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      }
-    )
-    return result.status
+    return apiPost(`/Accounts/${ACCOUNT_SID}/Messages/${args.sid}.json`, {
+      From: args.from,
+      To: args.to,
+      Body: args.body,
+    });
   },
   async page({ args }) {
-    // The default is 50, and the maximum is 1000.
     const pageSize = args.pageSize || 50
-
-    const { pageToken, page } = args
-    const result = await got.get(
-      `${baseUrl}/Accounts/${ACCOUNT_SID}/Messages.json?PageSize=${pageSize}&Page=${page}&PageToken=${pageToken}`,
-      {
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
-        },
-        auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
-      }
-    )
-    const json = JSON.parse(result.body)
-    return json
+    const query = stringifyQuery({
+      PageSize: args.pageSize || 50, // max is 1000
+      Page: args.page,
+      PageToken: args.pageToken,
+    })
+    return apiGet(`/Accounts/${ACCOUNT_SID}/Messages.json?${query}`);
   },
 }
 

@@ -27,6 +27,10 @@
           {
             "name": "messages",
             "type": "MessageCollection"
+          },
+          {
+            "name": "messagingServices",
+            "type": "MessagingServiceCollection"
           }
         ],
         "computedFields": [],
@@ -204,6 +208,51 @@
         ],
         "actions": [],
         "events": []
+      },
+      {
+        "name": "MessagingService",
+        "fields": [],
+        "computedFields": [],
+        "actions": [
+          {
+            "name": "sendSms",
+            "params": [],
+            "type": "Void"
+          }
+        ],
+        "events": [
+          {
+            "name": "smsReceived",
+            "params": [],
+            "type": "Void"
+          }
+        ]
+      },
+      {
+        "name": "MessagingServiceCollection",
+        "fields": [],
+        "computedFields": [
+          {
+            "name": "one",
+            "params": [
+              {
+                "name": "id",
+                "type": "String"
+              }
+            ],
+            "type": "MessagingService"
+          },
+          {
+            "name": "items",
+            "params": [],
+            "type": "List",
+            "ofType": {
+              "type": "MessagingService"
+            }
+          }
+        ],
+        "actions": [],
+        "events": []
       }
     ]
   },
@@ -220,6 +269,6 @@
     }
   ],
   "isDriver": false,
-  "id": "463ebaec-7b6f-4c02-8fdc-deaa91d19ff5",
+  "id": "6add9d9d-4205-4335-84ec-147d8df864dc",
   "files": []
 }
