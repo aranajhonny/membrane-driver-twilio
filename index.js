@@ -6,7 +6,7 @@ const { ACCOUNT_SID, AUTH_TOKEN } = process.env
 const { root } = program.refs
 
 const baseUrl = `https://api.twilio.com/2010-04-01/Accounts/${ACCOUNT_SID}`
-const baseUrlv1 = `https://messaging.twilio.com/v1/Accounts/${ACCOUNT_SID}`
+const baseUrlv1 = `https://messaging.twilio.com/v1`
 const headers = { accept: 'application/json', 'content-type': 'application/json' }
 const auth = `${ACCOUNT_SID}:${AUTH_TOKEN}`;
 
