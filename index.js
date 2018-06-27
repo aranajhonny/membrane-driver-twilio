@@ -68,10 +68,6 @@ async function api(method, path, options) {
   const result = await got[method](
     `${baseUrl}${path}`,
     {
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
       auth: `${ACCOUNT_SID}:${AUTH_TOKEN}`,
       ...options,
     }
