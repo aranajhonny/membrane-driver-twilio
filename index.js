@@ -141,14 +141,6 @@ export const MessagingServiceCollection = {
     const result = await apiGetv1(`/Services/${args.sid}`);
     return result;
   },
-  async sendSms({ self, args }) {
-    const { sid } = self.match(root.messagingService.one);
-    return apiPost(`/Messages.json`, {
-      MessagingServiceSid: sid,
-      To: args.to,
-      Body: args.body,
-    });
-  },
   async items({ args }) {
     const result = await apiGetv1(`/Services`);
     return result.services;
@@ -158,5 +150,13 @@ export const MessagingService = {
   self({ source }) {
     return root.messagingServices.one({ sid: source.sid });
   },
-  friendlyName({ source }) { return source.friendly_name; }
+  friendlyName({ source }) { return source.friendly_name; },
+  sendSms({ self, args }) {
+    const { sid } = self.match(root.messagingService.one);
+    return apiPost(`/Messages.json`, {
+      MessagingServiceSid: sid,
+      To: args.to,
+      Body: args.body,
+    });
+  },
 }
