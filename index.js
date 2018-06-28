@@ -48,34 +48,40 @@ export async function test({ name }) {
   return false;
 }
 
-export function endpoint({ name, req }) {
+export async function endpoint({ name, req }) {
   switch (name) {
     case 'webhooks': {
       const mssid = req.body.MessagingServiceSid || null;
       const msid = req.body.MessageSid || null;
-      const sms = {
+      
+      const event = {
         from: req.body.From,
         to: req.body.To,
         body: req.body.Body,
         messagingService: mssid && root.messagingServices.one({ sid: mssid }),
         message: msid && root.messages.one({ sid: msid }),
       }
-      console.log('Received:', sms);
+      console.log('Received:', event);
+      mssid && await event.messagingService.dispatch(event);
+      console.log('Event dispatched');
       break;
     }
   }
 }
 
-export const MessageCollection = {
-  async one({ args }) {
-    return apiGet(`/Messages/${args.sid}.json`);
-  },
+export const Root = {
   async sendSms({ args }) {
     return apiPost(`/Messages.json`, {
       From: args.from,
       To: args.to,
       Body: args.body,
     });
+  },
+}
+
+export const MessageCollection = {
+  async one({ args }) {
+    return apiGet(`/Messages/${args.sid}.json`);
   },
   async page({ args }) {
     const pageSize = args.pageSize || 50

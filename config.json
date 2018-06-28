@@ -34,7 +34,26 @@
           }
         ],
         "computedFields": [],
-        "actions": [],
+        "actions": [
+          {
+            "name": "sendSms",
+            "params": [
+              {
+                "name": "from",
+                "type": "String"
+              },
+              {
+                "name": "to",
+                "type": "String"
+              },
+              {
+                "name": "body",
+                "type": "String"
+              }
+            ],
+            "type": "Void"
+          }
+        ],
         "events": []
       },
       {
@@ -70,46 +89,8 @@
             ]
           }
         ],
-        "actions": [
-          {
-            "name": "sendSms",
-            "type": "Int",
-            "params": [
-              {
-                "name": "from",
-                "type": "String"
-              },
-              {
-                "name": "to",
-                "type": "String"
-              },
-              {
-                "name": "body",
-                "type": "String"
-              }
-            ]
-          }
-        ],
-        "events": [
-          {
-            "name": "smsReceived",
-            "params": [
-              {
-                "name": "from",
-                "type": "String"
-              },
-              {
-                "name": "to",
-                "type": "String"
-              },
-              {
-                "name": "body",
-                "type": "String"
-              }
-            ],
-            "type": "Void"
-          }
-        ]
+        "actions": [],
+        "events": []
       },
       {
         "name": "MessagePage",
@@ -297,6 +278,6 @@
     }
   ],
   "isDriver": false,
-  "id": "980da1d4-0ac4-4bf1-ad5c-633f07c54c3a",
+  "id": "9596e8c0-d08c-4948-b3f4-c1d09c2c1af1",
   "files": []
 }
