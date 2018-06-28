@@ -60,7 +60,7 @@ export function endpoint({ name, req }) {
         messagingService: mssid && root.messagingServices.one({ sid: mssid }),
         message: msid && root.messages.one({ sid: msid }),
       }
-      console.log('Received:',req.body);
+      console.log('Received:', sms);
       break;
     }
   }
