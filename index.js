@@ -51,10 +51,14 @@ export async function test({ name }) {
 export function endpoint({ name, req }) {
   switch (name) {
     case 'webhooks': {
+      const mssid = req.body.MessagingServiceSid || null;
+      const msid = req.body.MessageSid || null;
       const sms = {
         from: req.body.From,
         to: req.body.To,
         body: req.body.Body,
+        messagingService: mssid && root.messagingServices.one({ sid: mssid }),
+        message: msid && root.messages.one({ sid: msid }),
       }
       console.log('Received:',req.body);
       break;
