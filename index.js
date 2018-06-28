@@ -62,7 +62,7 @@ export async function endpoint({ name, req }) {
         message: msid && root.messages.one({ sid: msid }),
       }
       console.log('Received:', event);
-      mssid && await event.messagingService.dispatch(event);
+      mssid && await event.messagingService.smsReceived.dispatch(event);
       console.log('Event dispatched');
       break;
     }
