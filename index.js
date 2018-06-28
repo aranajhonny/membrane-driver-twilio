@@ -152,7 +152,7 @@ export const MessagingService = {
   },
   friendlyName({ source }) { return source.friendly_name; },
   sendSms({ self, args }) {
-    const { sid } = self.match(root.messagingService.one);
+    const { sid } = self.match(root.messagingServices.one);
     return apiPost(`/Messages.json`, {
       MessagingServiceSid: sid,
       To: args.to,
