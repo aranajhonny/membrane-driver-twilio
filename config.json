@@ -232,7 +232,34 @@
         "events": [
           {
             "name": "smsReceived",
-            "params": [],
+            "params": [
+              {
+                "name": "from",
+                "type": "String"
+              },
+              {
+                "name": "to",
+                "type": "String"
+              },
+              {
+                "name": "body",
+                "type": "String"
+              },
+              {
+                "name": "message",
+                "type": "Ref",
+                "ofType": {
+                  "type": "Message"
+                }
+              },
+              {
+                "name": "messagingService",
+                "type": "Ref",
+                "ofType": {
+                  "type": "MessagingService"
+                }
+              }
+            ],
             "type": "Void"
           }
         ]
@@ -278,6 +305,6 @@
     }
   ],
   "isDriver": false,
-  "id": "dc97bcfb-60ce-4456-ae4d-378e6f5cff10",
+  "id": "64de86ff-e6ad-43e9-bdcf-3661f07db1bb",
   "files": []
 }
